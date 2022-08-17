@@ -1,6 +1,7 @@
 {-# LANGUAGE FlexibleInstances #-}
 module Field where
 
+import Types
 import Data.Ratio
 import qualified Prelude as P
 
@@ -17,8 +18,6 @@ class Field a where
   zeroElem :: a
 
 
-type QQ = Ratio P.Integer 
-
 instance Field QQ where 
   (+)  = (P.+)
   (*)  = (P.*)
@@ -27,8 +26,6 @@ instance Field QQ where
   oneElem = 1
   zeroElem = 0
 
-type RR = P.Double
-
 instance Field RR where 
   (+) = (P.+)
   (*) =  (P.*) 
@@ -36,28 +33,6 @@ instance Field RR where
   inv = (P./ 1)
   oneElem = 1
   zeroElem = 0 
-
-data CC = Pair RR RR
-  deriving (P.Ord, P.Eq, P.Show)
-
-multC :: CC -> CC -> CC
-multC (Pair a1 b1) (Pair a2 b2) = 
-  Pair ((a1 * a2) + (b1 * b2)) ((a1 *b2)+ (b1 * a1))
-
-re :: CC -> RR 
-re (Pair a _) = a
-
-im :: CC -> RR 
-im (Pair _ a) = a
-
-conjugate :: CC -> CC 
-conjugate (Pair a b) = Pair a (neg b)
-
-fromPolar :: RR -> RR -> CC 
-fromPolar len angle = Pair (len * P.cos angle) (len * P.sin angle)
-
-toPolar :: CC -> (RR,RR)
-toPolar (Pair a b) = (P.sqrt ((a *a)+(b *b)), P.atan (b / a))
 
 instance Field CC where 
   a*b = multC a b
