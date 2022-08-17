@@ -6,6 +6,7 @@ type QQ = Ratio Integer
 type RR = Double
 data CC = Pair RR RR 
 type ZZ = Integer
+data NN = Z | Succ NN
 
 
 multC :: CC -> CC -> CC

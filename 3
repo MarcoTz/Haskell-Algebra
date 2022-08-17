@@ -1,0 +1,17 @@
+{-# LANGUAGE DatatypeContexts #-}
+module Vectors where 
+
+import Field
+
+data (Field a) => Vector a = Vempty 
+  | Vcons a (Vector a)
+
+dim :: Field a => Vector a -> Integer
+dim Vempty = 0
+dim (Vcons _ vec) = 1+dim vec
+
+innerProd :: Field a => Vector a -> Vector a -> a 
+innerProd Vempty Vempty = zeroElem
+innerProd Vempty _ = error "Vectors do not have the same dimension"
+innerProd _ Vempty = error "Vectors do not have the same dimension"
+innerProd (Vcons a1 vec1) (Vcons a2 vec2) = a1*a2 + innerProd vec1 vec2
