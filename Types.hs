@@ -5,6 +5,7 @@ import Data.Ratio
 type QQ = Ratio Integer
 type RR = Double
 data CC = Pair RR RR 
+type ZZ = Integer
 
 
 multC :: CC -> CC -> CC
