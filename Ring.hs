@@ -4,7 +4,6 @@ module Ring where
 
 import qualified Prelude as P
 import Types
-import qualified Field
 
 class Ring a where 
   ( + ) :: a->a->a
