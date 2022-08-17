@@ -7,20 +7,21 @@ import qualified Prelude as P
 class Field a where 
   ( + ) :: a->a->a
   ( - ) :: a->a->a
+  x - y = x + neg y
   ( * ) :: a->a->a
   ( / ) :: a->a->a
+  x / y = x * inv y
   neg :: a->a
   inv :: a -> a 
   oneElem :: a
   zeroElem :: a
 
+
 type QQ = Ratio P.Integer 
 
 instance Field QQ where 
   (+)  = (P.+)
-  (-) = (P.-)
   (*)  = (P.*)
-  (/) = (P./)
   neg = (P.- 0)
   inv  = (P./ 1)
   oneElem = 1
@@ -30,9 +31,7 @@ type RR = P.Double
 
 instance Field RR where 
   (+) = (P.+)
-  (*) =  (P.*)
-  (-) = (P.-)
-  (/) = (P./)
+  (*) =  (P.*) 
   neg = (P.- 0)
   inv = (P./ 1)
   oneElem = 1
@@ -62,9 +61,7 @@ toPolar (Pair a b) = (P.sqrt ((a *a)+(b *b)), P.atan (b / a))
 
 instance Field CC where 
   a*b = multC a b
-  a/b = multC a (inv b)
   a+b = Pair (re a + re b) (im a + im b)
-  a-b = Pair (re a - re b) (im a - im b)
   neg a = Pair (neg (re a)) (neg (im a))
   inv a = Pair 0 1 / a
   oneElem = Pair 1 0
