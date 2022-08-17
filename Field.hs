@@ -8,6 +8,7 @@ class Field a where
   ( - ) :: a->a->a
   ( * ) :: a->a->a
   ( / ) :: a->a->a
+  neg :: a->a
   inv :: a -> a 
   oneElem :: a
   zeroElem :: a
@@ -19,6 +20,7 @@ instance Field QQ where
   (-) = (Prelude.-)
   (*)  = (Prelude.*)
   (/) = (Prelude./)
+  neg = (Prelude.- 0)
   inv  = (Prelude./ 1)
   oneElem = 1
   zeroElem = 0
@@ -30,6 +32,7 @@ instance Field RR where
   (*) =  (Prelude.*)
   (-) = (Prelude.-)
   (/) = (Prelude./)
+  neg = (Prelude.- 0)
   inv = (Prelude./ 1)
   oneElem = 1
   zeroElem = 0 
@@ -53,6 +56,7 @@ instance Field CC where
   a/b = multC a (inv b)
   a+b = Pair (re a Field.+ re b) (im a Field.+ im b)
   a-b = Pair (re a Field.- re b) (im a Field.- im b)
+  neg a = Pair (neg (re a)) (neg (im a))
   inv a = Pair 1 0 Field./ a
   oneElem = Pair 1 0
   zeroElem = Pair 0 0 
